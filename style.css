@@ -84,14 +84,16 @@ header h1 {
     overflow: hidden;
 }
 
-.image-container img {
+.image-container img,
+.image-container video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s;
 }
 
-.item:hover .image-container img {
+.item:hover .image-container img,
+.item:hover .image-container video {
     transform: scale(1.05);
 }
 
@@ -108,6 +110,7 @@ header h1 {
     font-size: 1.2rem;
     color: #ccc;
     transition: all 0.3s;
+    z-index: 10;
 }
 
 .favorite-btn.active {
@@ -142,48 +145,6 @@ header h1 {
     border-radius: 20px;
     font-size: 0.8rem;
     color: #666;
-}
-
-.add-form {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 15px;
-    margin-bottom: 50px;
-}
-
-.add-form h2 {
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
-
-#addForm {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#addForm input,
-#addForm textarea,
-#addForm select {
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-#addForm button {
-    background: #3498db;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#addForm button:hover {
-    background: #2980b9;
 }
 
 footer {
