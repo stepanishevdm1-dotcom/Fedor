@@ -1,77 +1,56 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Федечка братиишь</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <header>
-        <h1><i class="fas fa-laugh-beam"></i> Этот ебалай снизу</h1>
-        <p>Здесь собраны лучшие гифки и фото етого дауна</p>
-    </header>
-
-    <div class="container">
-        <div class="controls">
-            <button class="filter-btn active" data-filter="all">Все</button>
-            <button class="filter-btn" data-filter="gif">Гифки</button>
-            <button class="filter-btn" data-filter="photo">Фото</button>
-            <button class="filter-btn" data-filter="favorite">Избранное</button>
-        </div>
-
-        <div class="gallery">
-            <!-- Пример гифки -->
-            <div class="item" data-type="gif" data-favorite="false">
-                <div class="image-container">
-                    <img src="images/abaudna.mp4" alt="Этот еблан когда играет в рыбалочку" loading="lazy">
-                    <button class="favorite-btn"><i class="far fa-heart"></i></button>
-                </div>
-                <div class="caption">
-                    <h3>Аутизм</h3>
-                    <p>Вот он ебалай 😂😂😂😂😂</p>
-                    <span class="date">22.22.2222</span>
-                </div>
-            </div>
-
-            <!-- Пример фото -->
-            <div class="item" data-type="photo" data-favorite="true">
-                <div class="image-container">
-                    <img src="images/pofig.png" alt="Этот ебалай еще и пофигист" loading="lazy">
-                    <button class="favorite-btn active"><i class="fas fa-heart"></i></button>
-                </div>
-                <div class="caption">
-                    <h3>Црод</h3>
-                    <p>Лучший день этого пофигиста</p>
-                    <span class="date">22.22.2222</span>
-                </div>
-            </div>
-
-            <!-- Добавьте больше гифок и фото по этому шаблону -->
+document.addEventListener('DOMContentLoaded', function() {
+    // Элементы управления фильтрами
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.item');
+    
+    // Кнопки "Избранное"
+    const favoriteButtons = document.querySelectorAll('.favorite-btn');
+    
+    // Фильтрация по категориям
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Удаляем активный класс у всех кнопок
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Добавляем активный класс текущей кнопке
+            this.classList.add('active');
             
-        </div>
-
-        <!-- Форма для добавления новых гифок/фото (опционально) -->
-        <div class="add-form">
-            <h2><i class="fas fa-plus-circle"></i> Добавить новое</h2>
-            <form id="addForm">
-                <input type="text" id="imageUrl" placeholder="Ссылка на изображение или гифку" required>
-                <input type="text" id="title" placeholder="Заголовок" required>
-                <textarea id="description" placeholder="Описание" rows="3"></textarea>
-                <select id="type">
-                    <option value="gif">Гифка</option>
-                    <option value="photo">Фото</option>
-                </select>
-                <button type="submit">Добавить</button>
-            </form>
-        </div>
-    </div>
-
-    <footer>
-        <p>52 нахуй</p>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
+            const filter = this.getAttribute('data-filter');
+            
+            items.forEach(item => {
+                const type = item.getAttribute('data-type');
+                const isFavorite = item.getAttribute('data-favorite') === 'true';
+                
+                if (filter === 'all' || 
+                    (filter === 'gif' && type === 'gif') || 
+                    (filter === 'photo' && type === 'photo') ||
+                    (filter === 'favorite' && isFavorite)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Добавление в избранное
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            const item = this.closest('.item');
+            
+            if (icon.classList.contains('far')) {
+                // Добавляем в избранное
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                this.classList.add('active');
+                item.setAttribute('data-favorite', 'true');
+            } else {
+                // Удаляем из избранного
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                this.classList.remove('active');
+                item.setAttribute('data-favorite', 'false');
+            }
+        });
+    });
+});
